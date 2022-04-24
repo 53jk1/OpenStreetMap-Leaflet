@@ -1,5 +1,8 @@
+<html lang="en"></html>
 <html>
     <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>Air polution</title>
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
         integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
@@ -7,6 +10,7 @@
         <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
         integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
         crossorigin=""></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
         <style>
             #map {height: 90%; width:100%;}
         </style>
@@ -15,6 +19,12 @@
     <body>
         <div id="map"></div>
         <button onclick="removePin()">Delete pins</button>
+        <label for="city">City name:</label>
+        <input type="text" id="city" name="city">
+        <button onclick="getCity()">Get City</button>
+        <div id="name">Name: </div>
+        <pre id="result" style="margin-top: 12px; border: 1px solid rgba(0,0,0,.15); padding: 12px"></pre>
+
         <script>
         var map = L.map('map').setView([50.32648703590944, 19.191783575035448], 18);
         var tiles = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
@@ -44,7 +54,22 @@
         });
 
         function removePin() {
-            map.removeLayer(markerOnClick)
+            map.removeLayer(markerOnClick);
+        }
+
+        function getCity() {
+            const request = new XMLHttpRequest();
+            let link = 'https://api.openaq.org/v1/locations?city=' + document.getElementById('city').value
+            try {
+                request.open('GET', link);
+                request.responseType = 'json';
+                request.addEventListener('load', () => initialize(request.response));
+                request.addEventListener('error', () => console.error('XHR error'));
+                request.send();
+            } catch(error) {
+                console.error(`XHR error ${request.status}`
+                );
+            }
         }
         </script>
     </body>
