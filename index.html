@@ -63,9 +63,14 @@
             try {
                 request.open('GET', link);
                 request.responseType = 'json';
-                for(var i = 0; i < request.response.results.countsByMeasurement.length; i++) {
-                    document.getElementById('countsByMeasurement').innerHTML += request.response.results.countsByMeasurement[i].parameter + ': ' + request.response.results.countsByMeasurement[i].count + '<br>';
-                }
+                request.addEventListener('load', function() {
+                    const response = request.response;
+                    document.getElementById('parameters').innerHTML = JSON.stringify(response, null, 2);
+                });
+                request.addEventListener('load', function() {
+                    const response = request.response;
+                    document.getElementById('countsByMeasurement').innerHTML = JSON.stringify(response.countsByMeasurement, null, 2);
+                });
                 request.addEventListener('error', () => console.error('XHR error'));
                 request.send();
             } catch(error) {
