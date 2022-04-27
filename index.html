@@ -63,8 +63,8 @@
                 request.open('GET', link);
                 request.responseType = 'json';
                 request.addEventListener('load', function() {
-                    const response = request.response;
-                    document.getElementById('parameters').innerHTML = JSON.stringify(response, response.results[0].countsByMeasurement[1, 2, 3, 4, 5], 2);
+                    const response = request.response.results.countsByMeasurement;
+                    document.getElementById('parameters').innerHTML = JSON.stringify(response, null, 2);
                 });
                 request.addEventListener('error', () => console.error('XHR error'));
                 request.send();
