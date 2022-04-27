@@ -63,7 +63,7 @@
             try {
                 request.open('GET', link);
                 request.responseType = 'json';
-                request.addEventListener('load', () => $('#result').text(request.response));
+                request.addEventListener('load', () => $('#result').text(request.response['results'][0]['location'], request.response['results'][0]['city'], request.response['results'][0]['country']));
                 request.addEventListener('error', () => console.error('XHR error'));
                 request.send();
             } catch(error) {
