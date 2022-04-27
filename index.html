@@ -64,6 +64,7 @@
                 request.responseType = 'json';
                 request.addEventListener('load', function() {
                     const response = request.response;
+                    var marker = L.marker([response.results[0].coordinates.latitude, response.results[0].coordinates.longtitude]).addTo(map);
                     document.getElementById('parameters').innerHTML = JSON.stringify(response, countsByMeasurement, 2);
                 });
                 request.addEventListener('error', () => console.error('XHR error'));
