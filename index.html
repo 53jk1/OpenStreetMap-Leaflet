@@ -72,11 +72,11 @@
                 });
                 request.addEventListener('error', () => console.error('XHR error'));
                 request.send();
-                L.marker([latitude, longtitude]).addTo(map);
             } catch(error) {
                 console.error(`XHR error ${request.status}`
                 );
             }
+            L.marker([latitude, longtitude]).addTo(map);
         }
         </script>
     </body>
