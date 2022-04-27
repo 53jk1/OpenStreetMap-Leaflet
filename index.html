@@ -43,7 +43,6 @@
         ]).addTo(map);
         var markerOnClick;
         map.on('click', function(e){
-            
             lat = e.latlng.lat;
             lon = e.latlng.lng;
             if (markerOnClick != undefined) {
@@ -67,6 +66,7 @@
                         return item.countsByMeasurement;
                     });
                     document.getElementById('parameters').innerHTML = JSON.stringify(response, null, 2);
+                    L.marker([response[0].coordinates.latitude, response[0].coordinates.longitude]).addTo(map);
                 });
                 request.addEventListener('error', () => console.error('XHR error'));
                 request.send();
@@ -74,6 +74,7 @@
                 console.error(`XHR error ${request.status}`
                 );
             }
+
         }
         </script>
     </body>
