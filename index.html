@@ -63,11 +63,11 @@
                 request.open('GET', link);
                 request.responseType = 'json';
                 request.addEventListener('load', function() {
+                    const latitude = request.response.results[0].coordinates.latitude;
+                    const longtitude = request.response.results[0].coordinates.longitude;
                     const response = request.response.results.map(function(item) {
                         return item.countsByMeasurement;
                     });
-                    const latitude = request.response.results[0].coordinates.latitude;
-                    const longtitude = request.response.results[0].coordinates.longitude;
                     document.getElementById('parameters').innerHTML = JSON.stringify(response, null, 2);
                 });
                 request.addEventListener('error', () => console.error('XHR error'));
