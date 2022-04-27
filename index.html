@@ -64,7 +64,8 @@
                 request.responseType = 'json';
                 request.addEventListener('load', function() {
                     const response = request.response.results.map(function(item) {
-                        return item.countsByMeasurement, item.coordinates;
+                        L.marker([item.latitude, item.longtitude]).addTo(map);
+                        return item.coordinates;
                     });
                     document.getElementById('parameters').innerHTML = JSON.stringify(response, null, 2);
                 });
