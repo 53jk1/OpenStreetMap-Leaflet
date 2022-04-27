@@ -63,8 +63,9 @@
             try {
                 request.open('GET', link);
                 request.responseType = 'json';
-                request.addEventListener('load', () => $('#parameters').text(request.response.results.parameters));
-                request.addEventListener('load', () => $('#countsByMeasurement').text(request.response.results.parameters));
+                for(var i = 0; i < request.response.results.countsByMeasurement.length; i++) {
+                    document.getElementById('countsByMeasurement').innerHTML += request.response.results.countsByMeasurement[i].parameter + ': ' + request.response.results.countsByMeasurement[i].count + '<br>';
+                }
                 request.addEventListener('error', () => console.error('XHR error'));
                 request.send();
             } catch(error) {
