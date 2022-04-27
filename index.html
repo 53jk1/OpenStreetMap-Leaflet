@@ -23,7 +23,6 @@
         <input type="text" id="city" name="city">
         <button onclick="getCity()">Get City</button>
         <pre id="parameters" style="margin-top: 12px; border: 1px solid rgba(0,0,0,.15); padding: 12px"></pre>
-        <pre id="countsByMeasurement" style="margin-top: 12px; border: 1px solid rgba(0,0,0,.15); padding: 12px"></pre>
 
         <script>
         var map = L.map('map').setView([50.32648703590944, 19.191783575035448], 18);
@@ -65,11 +64,7 @@
                 request.responseType = 'json';
                 request.addEventListener('load', function() {
                     const response = request.response;
-                    document.getElementById('parameters').innerHTML = JSON.stringify(response, null, 2);
-                });
-                request.addEventListener('load', function() {
-                    const response = request.response;
-                    document.getElementById('countsByMeasurement').innerHTML = JSON.stringify(response.countsByMeasurement, null, 2);
+                    document.getElementById('parameters').innerHTML = JSON.stringify(response, countsByMeasurement, 2);
                 });
                 request.addEventListener('error', () => console.error('XHR error'));
                 request.send();
